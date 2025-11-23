@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="zh-TW"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;拉武耳定律與分餾原理詳解 - A與B代號版&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* --- 1. 整體版面設定 --- */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: "Microsoft JhengHei", "Heiti TC", Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f4f7f6;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 5px 20px rgba(0,0,0,0.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #2c3e50;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 3px solid #eee;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #34495e;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-left: 5px solid #3498db;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-left: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* --- 2. 視覺化動畫區 (保留穩定的核心) --- */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.canvas-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #2c3e50; /* 深藍色背景，讓粒子更清楚 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: inset 0 0 20px rgba(0,0,0,0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>canvas {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.controls {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-start { background: #e74c3c; color: white; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-start:hover { background: #c0392b; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-next { background: #3498db; color: white; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-next:hover { background: #2980b9; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-reset { background: #95a5a6; color: white; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>button:disabled {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #555;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #aaa;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: not-allowed;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.legend {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.9em;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* --- 3. 教學內容區 --- */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.concept-box {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #eaf2f8;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #d6eaf8;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.highlight-red { color: #ff4757; font-weight: bold; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.highlight-blue { color: #4ecdc4; font-weight: bold; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* 數學符號使用此類別，確保使用 sub/sup */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.math-symbol { font-weight: bold; font-family: Arial, sans-serif; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* 數學算式排版 (CSS Fraction) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.math-row {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: Consolas, monospace;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #fdfdfd;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #eee;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 10px 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.1em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.fraction {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vertical-align: middle;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 8px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.numerator {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid #333;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-bottom: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.denominator {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-top: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.note {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.9em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #666;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;🧪 拉武耳定律：混合溶液蒸餾模擬&lt;/h1&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="concept-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;題目條件：&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;span class="highlight-red"&gt;● 苯 (組成分 A)&lt;/span&gt;：莫耳分率 &lt;span class="math-symbol"&gt;X&lt;sub&gt;A&lt;/sub&gt;&lt;/span&gt; = 0.2，飽和蒸氣壓 &lt;span class="math-symbol"&gt;P&lt;sup&gt;0&lt;/sup&gt;&lt;sub&gt;A&lt;/sub&gt;&lt;/span&gt; = 70 mmHg (易揮發)。&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;span class="highlight-blue"&gt;● 甲苯 (組成分 B)&lt;/span&gt;：莫耳分率 &lt;span class="math-symbol"&gt;X&lt;sub&gt;B&lt;/sub&gt;&lt;/span&gt; = 0.8，飽和蒸氣壓 &lt;span class="math-symbol"&gt;P&lt;sup&gt;0&lt;/sup&gt;&lt;sub&gt;B&lt;/sub&gt;&lt;/span&gt; = 20 mmHg (難揮發)。&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;目標：&lt;/strong&gt;觀察蒸發後的氣體組成，並計算冷凝後苯的比例。</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;1. 動態實驗模擬&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="canvas-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="legend"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="dot" style="background:#ff4757"&gt;&lt;/span&gt;苯 (A)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&amp;nbsp;&amp;nbsp;&amp;nbsp;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="dot" style="background:#4ecdc4"&gt;&lt;/span&gt;甲苯 (B)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;canvas id="simCanvas" width="800" height="350"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="controls"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="btn1" class="btn-start" onclick="runStep1()"&gt;1. 開始蒸發 (建立平衡)&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="btn2" class="btn-next" onclick="runStep2()" disabled&gt;2. 冷凝 (取出氣體)&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-reset" onclick="resetSim()"&gt;重置&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;2. 什麼是拉武耳定律 (Raoult's Law)？&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>拉武耳定律是用來計算「理想溶液」上方蒸氣壓的公式。它的核心概念是：</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;「一個組成分在混合溶液中能產生多少分壓，取決於它原本的能力 (&lt;span class="math-symbol"&gt;P&lt;sup&gt;0&lt;/sup&gt;&lt;sub&gt;i&lt;/sub&gt;&lt;/span&gt;) 以及它在溶液中有多少比例 (&lt;span class="math-symbol"&gt;X&lt;sub&gt;i&lt;/sub&gt;&lt;/span&gt;)。」&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="math-row" style="background: #fff8e1; border-color: #ffe082;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>分壓 (&lt;span class="math-symbol"&gt;P&lt;sub&gt;i&lt;/sub&gt;&lt;/span&gt;) = 飽和蒸氣壓 (&lt;span class="math-symbol"&gt;P&lt;sup&gt;0&lt;/sup&gt;&lt;sub&gt;i&lt;/sub&gt;&lt;/span&gt;) &amp;times; 莫耳分率 (&lt;span class="math-symbol"&gt;X&lt;sub&gt;i&lt;/sub&gt;&lt;/span&gt;)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>想像一下：</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;strong&gt;飽和蒸氣壓 (&lt;span class="math-symbol"&gt;P&lt;sup&gt;0&lt;/sup&gt;&lt;/span&gt;)&lt;/strong&gt;：是物質「想變成氣體」的慾望強度。苯 (A) 的慾望 (70) 比甲苯 (B) (20) 強很多。&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;strong&gt;莫耳分率 (&lt;span class="math-symbol"&gt;X&lt;/span&gt;)&lt;/strong&gt;：是物質在液體表面的「佔有率」。&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;3. 詳細計算過程&lt;/h2&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;Step 1: 計算個別分壓 (Partial Pressure)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;我們分別計算苯 (A) 和甲苯 (B) 貢獻了多少壓力：&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="math-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>P&lt;sub&gt;A&lt;/sub&gt; = P&lt;sup&gt;0&lt;/sup&gt;&lt;sub&gt;A&lt;/sub&gt; &amp;times; X&lt;sub&gt;A&lt;/sub&gt; = 70 &amp;times; 0.2 = &lt;span class="highlight-red" style="margin-left:10px;"&gt;14 mmHg&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="math-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>P&lt;sub&gt;B&lt;/sub&gt; = P&lt;sup&gt;0&lt;/sup&gt;&lt;sub&gt;B&lt;/sub&gt; &amp;times; X&lt;sub&gt;B&lt;/sub&gt; = 20 &amp;times; 0.8 = &lt;span class="highlight-blue" style="margin-left:10px;"&gt;16 mmHg&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="note"&gt;注意！雖然苯 (A) 在液體裡只有 20%，但因為它很會揮發，所以它貢獻的壓力 (14) 跟佔了 80% 的甲苯 (B) (16) 幾乎一樣多！&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;Step 2: 計算總蒸氣壓 (Total Pressure)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;根據道耳頓分壓定律，總壓力就是把大家的分壓加起來：&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="math-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>P&lt;sub&gt;總&lt;/sub&gt; = P&lt;sub&gt;A&lt;/sub&gt; + P&lt;sub&gt;B&lt;/sub&gt; = 14 + 16 = &lt;strong&gt;30 mmHg&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;Step 3: 計算蒸氣中的莫耳分率 (&lt;span class="math-symbol"&gt;Y&lt;sub&gt;i&lt;/sub&gt;&lt;/span&gt;)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>氣體中的比例 ($Y$) 等於該氣體的分壓除以總壓。</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="math-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>Y&lt;sub&gt;A&lt;/sub&gt; =<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="fraction"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="numerator"&gt;P&lt;sub&gt;A&lt;/sub&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="denominator"&gt;P&lt;sub&gt;總&lt;/sub&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>=</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="fraction"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="numerator"&gt;14&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="denominator"&gt;30&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>=</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="fraction"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="numerator"&gt;7&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="denominator"&gt;15&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&amp;asymp; &lt;span class="highlight-red" style="margin-left:10px;"&gt;0.467 (46.7%)&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="concept-box" style="background:#e8f5e9; border-color:#c8e6c9; margin-top:20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="margin-top:0; color:#2e7d32;"&gt;結論&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;經過一次蒸發與冷凝（蒸餾），苯 (A) 的濃度從原本的 X&lt;sub&gt;A&lt;/sub&gt; = &lt;strong&gt;20%&lt;/strong&gt; 大幅提升到了 Y&lt;sub&gt;A&lt;/sub&gt; &amp;asymp; &lt;strong&gt;46.7%&lt;/strong&gt;。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;這就是為什麼我們可以透過反覆蒸餾（分餾）來純化物質的原因！&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// --- 這裡使用最穩定的 JavaScript 寫法 ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>var canvas = document.getElementById("simCanvas");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ctx = canvas.getContext("2d");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var btn1 = document.getElementById("btn1");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var btn2 = document.getElementById("btn2");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 參數</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var RED = "#ff4757"; // 苯 A</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var BLUE = "#4ecdc4"; // 甲苯 B</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var particles = [];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var timer = null;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 定義區域 (左杯, 氣體區, 右杯)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var boxL = {x: 50, y: 180, w: 200, h: 120};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var boxGas = {x: 50, y: 30, w: 200, h: 120};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var boxR = {x: 550, y: 180, w: 200, h: 120};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 物理調整參數</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var PARTICLE_R = 7; // 粒子半徑</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var DAMPING = 0.85; // 邊界碰撞阻尼 (消除閃爍/亂跳)</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 初始化</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function init() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>particles = [];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 為了模擬 0.2 : 0.8 的比例，我們產生 10 顆紅球(A)，40 顆藍球(B)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>for(var i=0; i&lt;10; i++) particles.push(createParticle('red'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>for(var i=0; i&lt;40; i++) particles.push(createParticle('blue'));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn1.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn2.disabled = true;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 啟動動畫迴圈</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(timer) clearInterval(timer);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>timer = setInterval(draw, 20); // 50 FPS</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function createParticle(type) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var baseSpeed = (type === 'red') ? 2.5 : 1.5; // 苯(A)更快</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>type: type,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: (type === 'red') ? RED : BLUE,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>x: boxL.x + 20 + Math.random() * (boxL.w - 40),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>y: boxL.y + 20 + Math.random() * (boxL.h - 30),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vx: (Math.random() - 0.5) * baseSpeed,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vy: (Math.random() - 0.5) * baseSpeed,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>state: 'LIQUID_L', // 狀態: LIQUID_L, GAS, TRANSFER, LIQUID_R</p>
+<p class="p1"><span class="Apple-converted-space">            </span>targetX: 0</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 按鈕 1: 蒸發 (已修正為直接選取，以保證 7紅:8藍 的比例)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.runStep1 = function() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn1.disabled = true;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// **新邏輯：直接設定需要蒸發的數量，以確保動畫符合計算結果 (7紅, 8藍)**</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var rToEvaporate = 7;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var bToEvaporate = 8;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>for(var i=0; i&lt;particles.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var p = particles[i];</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(p.state === 'LIQUID_L') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (p.type === 'red' &amp;&amp; rToEvaporate &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>p.state = 'GAS';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>rToEvaporate--;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else if (p.type === 'blue' &amp;&amp; bToEvaporate &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>p.state = 'GAS';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>bToEvaporate--;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 一旦達到目標數量，即可停止迴圈</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (rToEvaporate === 0 &amp;&amp; bToEvaporate === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 2.5秒後解鎖第二步</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(function() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>btn2.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}, 2500);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 按鈕 2: 冷凝</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.runStep2 = function() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn2.disabled = true;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>for(var i=0; i&lt;particles.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var p = particles[i];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(p.state === 'GAS') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.state = 'TRANSFER';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.targetX = boxR.x + boxR.w/2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.resetSim = function() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>init();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 繪圖與物理核心</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function draw() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 1. 清空畫布</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = "#2c3e50";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(0, 0, 800, 350);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 2. 畫容器框線</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.strokeStyle = "white";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.lineWidth = 2;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 左杯</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.strokeRect(boxL.x, boxL.y, boxL.w, boxL.h);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = "white";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.font = "16px Arial";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillText("溶液 1 (X_A = 0.2)", boxL.x + 50, boxL.y + boxL.h + 30);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 右杯</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.strokeRect(boxR.x, boxR.y, boxR.w, boxR.h);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillText("溶液 2 (Y_A ≈ 0.47)", boxR.x + 50, boxR.y + boxR.h + 30);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 氣體區 (虛線)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.setLineDash([5, 5]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.strokeRect(boxGas.x, boxGas.y, boxGas.w, boxGas.h);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.setLineDash([]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillText("飽和蒸氣區", boxGas.x + 60, boxGas.y - 10);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 管道示意</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.moveTo(boxGas.x + boxGas.w, boxGas.y + 50);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.lineTo(boxR.x + boxR.w/2, boxGas.y + 50);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.lineTo(boxR.x + boxR.w/2, boxR.y);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.strokeStyle = "rgba(255,255,255,0.3)";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ctx.stroke();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 3. 處理粒子</p>
+<p class="p1"><span class="Apple-converted-space">        </span>for(var i=0; i&lt;particles.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var p = particles[i];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateParticle(p);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 畫球</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var r = (p.state === 'GAS' || p.state === 'TRANSFER') ? PARTICLE_R + 1 : PARTICLE_R - 1;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.arc(p.x, p.y, r, 0, Math.PI * 2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillStyle = p.color;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fill();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.strokeStyle = "white";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.lineWidth = 1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.stroke();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function updateParticle(p) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 左液體 (原地發抖)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(p.state === 'LIQUID_L') {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.x += p.vx;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.y += p.vy;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>checkBounds(p, boxL);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 變成氣體 (先往上飛，然後在上面隨機運動)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if(p.state === 'GAS') {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(p.y &gt; boxGas.y + boxGas.h - 15) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.y -= 3;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.x += (Math.random()-0.5) * 2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 已到達氣體區 - 修正為隨機/布朗運動</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var chaos = (p.type === 'red') ? 3.5 : 2.5; // 苯(A)速度稍快，運動更劇烈</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.x += (Math.random() - 0.5) * chaos; // X軸隨機移動</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.y += (Math.random() - 0.5) * chaos; // Y軸隨機移動</p>
+<p class="p1"><span class="Apple-converted-space">                </span>checkBounds(p, boxGas); // 檢查邊界並將其鎖定在盒內</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 轉移 (向右飛)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if(p.state === 'TRANSFER') {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(p.x &lt; p.targetX) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.x += 6;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.y += (Math.random()-0.5) * 2;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 高度限制</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(p.y &gt; boxGas.y + boxGas.h) p.y = boxGas.y + boxGas.h;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(p.y &lt; boxGas.y) p.y = boxGas.y;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.state = 'DROP';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 下墜 (增加重力感)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if(p.state === 'DROP') {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.y += 5 + (p.type === 'blue' ? 1 : 0); // 甲苯(B)重一點，下墜更快</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(p.y &gt; boxR.y + 30) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.state = 'LIQUID_R';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 右液體 (已冷凝並沉澱)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if(p.state === 'LIQUID_R') {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 修正：大幅減緩速度 (x0.1) 讓粒子看起來像是穩定沉澱的液體</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.x += p.vx * 0.1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.y += p.vy * 0.1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>checkBounds(p, boxR);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 穩定的邊界檢查函數 (添加阻尼)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function checkBounds(p, rect) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// X-axis check</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(p.x &lt; rect.x + PARTICLE_R) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.x = rect.x + PARTICLE_R; // 貼齊邊界</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.vx = Math.abs(p.vx) * DAMPING; // 反彈並損失能量 (主要用於液體)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(p.x &gt; rect.x + rect.w - PARTICLE_R) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.x = rect.x + rect.w - PARTICLE_R;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.vx = -Math.abs(p.vx) * DAMPING;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Y-axis check</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(p.y &lt; rect.y + PARTICLE_R) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.y = rect.y + PARTICLE_R;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.vy = Math.abs(p.vy) * DAMPING;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(p.y &gt; rect.y + rect.h - PARTICLE_R) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.y = rect.y + rect.h - PARTICLE_R;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>p.vy = -Math.abs(p.vy) * DAMPING;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 啟動程式</p>
+<p class="p1"><span class="Apple-converted-space">    </span>init();</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
